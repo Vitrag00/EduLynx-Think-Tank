@@ -1,18 +1,17 @@
 "use client";
-import React from "react";
-import topicsData from "@/data/mockTopics.json";
+import React, { useState, useEffect } from "react";
+import fallbackTopics from "@/data/mockTopics.json";
 import type { Topic } from "@/types/topic";
 import { FilterPanel } from "@/components/filters/FilterPanel";
 import { ActiveFilterChips } from "@/components/filters/ActiveFilterChips";
 import { TopicCardGrid } from "@/components/cards/TopicCardGrid";
 import { TopicDrawer } from "@/components/detail/TopicDrawer";
+import { LoadingSkeleton } from "@/components/ui/LoadingSkeleton";
 import { useFilters } from "@/hooks/useFilters";
 import { useCompareStore } from "@/store/filterStore";
 import Link from "next/link";
 
-const allTopics = topicsData as Topic[];
-
-function CompareTray() {
+function CompareTray({ allTopics }: { allTopics: Topic[] }) {
   const { compareIds, clearCompare } = useCompareStore();
   if (compareIds.length === 0) return null;
 
@@ -52,16 +51,13 @@ function CompareTray() {
   );
 }
 
-function ExploreContent() {
+function ExploreContent({ allTopics }: { allTopics: Topic[] }) {
   const filtered = useFilters(allTopics);
 
   return (
     <>
       <div className="flex gap-6 max-w-7xl mx-auto px-6 py-8">
-        {/* Sidebar */}
         <FilterPanel />
-
-        {/* Main content */}
         <div className="flex-1 min-w-0">
           <div className="mb-4 flex items-center justify-between">
             <h1 className="text-lg font-bold text-navy">
@@ -77,11 +73,44 @@ function ExploreContent() {
       </div>
 
       <TopicDrawer topics={allTopics} />
-      <CompareTray />
+      <CompareTray allTopics={allTopics} />
     </>
   );
 }
 
 export default function ExplorePage() {
-  return <ExploreContent />;
+  const [topics, setTopics] = useState<Topic[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/topics")
+      .then((r) => {
+        if (!r.ok) throw new Error("API unavailable");
+        return r.json();
+      })
+      .then((data: Topic[]) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setTopics(data);
+        } else {
+          setTopics(fallbackTopics as Topic[]);
+        }
+      })
+      .catch(() => {
+        setTopics(fallbackTopics as Topic[]);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex gap-6 max-w-7xl mx-auto px-6 py-8">
+        <div className="w-52 shrink-0" />
+        <div className="flex-1">
+          <LoadingSkeleton />
+        </div>
+      </div>
+    );
+  }
+
+  return <ExploreContent allTopics={topics} />;
 }

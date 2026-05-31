@@ -42,6 +42,9 @@ export interface Topic {
   shortlisted: boolean;
   convertedToRQ: boolean;
   mentorNote: string;
+  abstract?: string;
+  pdfUrl?: string | null;
+  pdfFilename?: string | null;
 }
 
 export interface FilterState {

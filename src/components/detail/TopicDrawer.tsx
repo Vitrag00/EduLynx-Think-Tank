@@ -210,28 +210,44 @@ export function TopicDrawer({ topics }: TopicDrawerProps) {
             </div>
 
             {/* Footer actions */}
-            <div className="px-6 py-4 border-t border-[#e2e8f0] bg-white flex items-center gap-2">
-              <button
-                onClick={() => topic && toggleShortlist(topic.id)}
-                className={`flex-1 py-2 rounded text-sm font-semibold border transition-colors ${
-                  shortlisted
-                    ? "bg-gold text-white border-gold"
-                    : "bg-navy text-white border-navy hover:bg-navy-light"
-                }`}
-              >
-                {shortlisted ? "★ Shortlisted" : "☆ Shortlist"}
-              </button>
-              <button
-                onClick={() =>
-                  topic && (inCompare ? removeFromCompare(topic.id) : addToCompare(topic.id))
-                }
-                className="flex-1 py-2 rounded text-sm font-semibold border border-navy text-navy hover:bg-navy/5 transition-colors"
-              >
-                {inCompare ? "✓ In Compare" : "Compare"}
-              </button>
-              <button className="flex-1 py-2 rounded text-sm font-semibold bg-gold text-white hover:bg-gold-light transition-colors">
-                Request Guidance →
-              </button>
+            <div className="px-6 py-4 border-t border-[#e2e8f0] bg-white space-y-2">
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => topic && toggleShortlist(topic.id)}
+                  className={`flex-1 py-2 rounded text-sm font-semibold border transition-colors ${
+                    shortlisted
+                      ? "bg-gold text-white border-gold"
+                      : "bg-navy text-white border-navy hover:bg-navy-light"
+                  }`}
+                >
+                  {shortlisted ? "★ Shortlisted" : "☆ Shortlist"}
+                </button>
+                <button
+                  onClick={() =>
+                    topic && (inCompare ? removeFromCompare(topic.id) : addToCompare(topic.id))
+                  }
+                  className="flex-1 py-2 rounded text-sm font-semibold border border-navy text-navy hover:bg-navy/5 transition-colors"
+                >
+                  {inCompare ? "✓ In Compare" : "Compare"}
+                </button>
+                <button className="flex-1 py-2 rounded text-sm font-semibold bg-gold text-white hover:bg-gold-light transition-colors">
+                  Request Guidance →
+                </button>
+              </div>
+              {topic?.pdfUrl && (
+                <a
+                  href={topic.pdfUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 w-full py-2 rounded text-sm font-semibold border border-[#e2e8f0] text-charcoal/70 hover:bg-warm hover:text-navy transition-colors"
+                >
+                  <span>↓</span>
+                  Download PDF
+                  {topic.pdfFilename && (
+                    <span className="text-charcoal/40 font-normal text-xs">· {topic.pdfFilename}</span>
+                  )}
+                </a>
+              )}
             </div>
           </motion.div>
         </>

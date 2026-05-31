@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "../src/styles/globals.css";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
+import { ConditionalShell } from "@/components/layout/ConditionalShell";
 
 export const metadata: Metadata = {
   title: "EduLynx Think Tank — Academic Opportunity Dashboard",
@@ -16,9 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased bg-warm min-h-screen flex flex-col">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <ConditionalShell>{children}</ConditionalShell>
       </body>
     </html>
   );

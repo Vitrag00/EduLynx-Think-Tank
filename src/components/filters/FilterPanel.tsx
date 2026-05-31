@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useFilterStore } from "@/store/filterStore";
-import type { FilterState, SubjectGroup, Level, TargetBand, ServiceType, MethodologyType, InventoryType } from "@/types/topic";
+import type { SubjectGroup, Level, TargetBand, ServiceType, MethodologyType, InventoryType } from "@/types/topic";
 
 const SUBJECT_MAP: Record<SubjectGroup, string[]> = {
   STEM: ["Physics", "Chemistry", "Mathematics", "Biology"],

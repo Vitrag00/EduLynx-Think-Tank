@@ -1,6 +1,6 @@
 "use client";
 import { create } from "zustand";
-import type { FilterState, SubjectGroup, Level, TargetBand, ServiceType, MethodologyType, InventoryType } from "@/types/topic";
+import type { FilterState } from "@/types/topic";
 
 interface FilterStore {
   filters: FilterState;

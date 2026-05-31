@@ -27,7 +27,7 @@ export default function IdeationPage() {
             <ul className="space-y-2 text-xs text-charcoal/70 leading-relaxed">
               <li className="flex gap-2">
                 <span className="text-gold font-bold shrink-0">→</span>
-                Frame as "To what extent does X affect Y in context Z?"
+                Frame as &ldquo;To what extent does X affect Y in context Z?&rdquo;
               </li>
               <li className="flex gap-2">
                 <span className="text-gold font-bold shrink-0">→</span>
